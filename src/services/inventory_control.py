@@ -33,4 +33,10 @@ class InventoryMapping:
         return False
 
     def consume_recipe(self, recipe: Recipe) -> None:
-        pass
+        if self.check_recipe_availability(recipe):
+            for ingredient in recipe:
+                self.inventory[ingredient] -= int(recipe[ingredient])
+            return None
+
+        else:
+            raise ValueError("Esta receita não está disponível!")
