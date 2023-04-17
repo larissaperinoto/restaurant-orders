@@ -26,11 +26,13 @@ class InventoryMapping:
 
     def check_recipe_availability(self, recipe: Recipe):
         for ingredient in recipe:
-            if ingredient in self.inventory:
-                if int(recipe[ingredient]) <= self.inventory[ingredient]:
-                    return True
+            if (
+                ingredient not in self.inventory
+                or int(recipe[ingredient]) > self.inventory[ingredient]
+            ):
+                return False
 
-        return False
+        return True
 
     def consume_recipe(self, recipe: Recipe) -> None:
         if len(recipe) == 0:
